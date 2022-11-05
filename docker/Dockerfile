@@ -341,18 +341,18 @@ Run git clone https://github.com/nficano/humps.git /tmp/humps && \
     python3 setup.py --command-packages=stdeb.command bdist_deb; cp deb_dist/*.deb .. && \
     dpkg -i /tmp/python3-pyhumps_*_all.deb
 
-# Packages needed for vyos-1x-xdp package, gcc-multilib is not available on
-# arm64 but required by XDP
+# gcc-multilib is "needed" by XDP but is not avaialble on arm64
+# We will use a workaround later on
 RUN if dpkg-architecture -ii386 || dpkg-architecture -iamd64; then \
       apt-get update && apt-get install -y \
-        gcc-multilib \
+        gcc-multilib; fi;
+RUN apt-get update && apt-get install -y \
         clang \
         llvm \
         libelf-dev \
         libpcap-dev \
         libbpf-dev \
-        build-essential; \
-    fi
+        build-essential
 
 # Go required for validators and vyos-xe-guest-utilities
 RUN GO_VERSION_INSTALL="1.18.3" ; \
@@ -421,16 +421,17 @@ RUN if dpkg-architecture -ii386 || dpkg-architecture -iamd64; then \
         qemu-kvm; \
     fi
 
-# Packages needed for building vmware and GCE images
-# This is only supported on i386 and amd64 platforms
 RUN if dpkg-architecture -ii386 || dpkg-architecture -iamd64; then \
-     apt-get update && apt-get install -y \
+      apt-get update && apt-get install -y \
+	grub2-pc; \
+    fi
+
+# Packages needed for building vmware and GCE images
+RUN apt-get update && apt-get install -y \
       kpartx \
       parted \
       udev \
-      grub-pc \
-      grub2-common; \
-    fi
+      grub2-common
 
 # Packages needed for vyos-cloud-init
 RUN apt-get update && apt-get install -y \
@@ -561,8 +562,7 @@ RUN apt-get update && apt-get install -y \
       zip
 
 # Packages needed for Fastnetmon
-RUN if dpkg-architecture -ii386 || dpkg-architecture -iamd64; then \
-     apt-get update && apt-get install -y \
+RUN     apt-get update && apt-get install -y \
        cmake \
        debhelper-compat \
        libboost-atomic-dev \
@@ -588,8 +588,7 @@ RUN if dpkg-architecture -ii386 || dpkg-architecture -iamd64; then \
        libmongoc-dev \
        libncurses5-dev \
        libpcap-dev \
-       pkg-config; \
-     fi
+       pkg-config
 
 # Packages needed for hostapd (wpa_supplicant)
 RUN apt-get update && apt-get install -y \
