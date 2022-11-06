@@ -335,7 +335,8 @@ RUN if dpkg-architecture -ii386 || dpkg-architecture -iamd64; then \
         libelf-dev \
         libpcap-dev \
         libbpf-dev \
-        build-essential; \
+        build-essential \
+        dwarves; \
     fi
 
 # Go required for validators and vyos-xe-guest-utilities
