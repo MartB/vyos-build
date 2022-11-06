@@ -352,7 +352,8 @@ RUN apt-get update && apt-get install -y \
         libelf-dev \
         libpcap-dev \
         libbpf-dev \
-        build-essential
+        build-essential \
+	dwarves
 
 # Go required for validators and vyos-xe-guest-utilities
 RUN GO_VERSION_INSTALL="1.18.3" ; \
