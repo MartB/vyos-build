@@ -2,6 +2,8 @@
 CWD=$(pwd)
 KERNEL_VAR_FILE=${CWD}/kernel-vars
 
+apt-get remove -y libeditreadline-dev || :
+apt-get install -y liblua5.3-dev || :
 ACCEL_SRC=${CWD}/accel-ppp
 if [ ! -d ${ACCEL_SRC} ]; then
     echo "Accel-PPP source not found"
@@ -30,3 +32,5 @@ cpack -G DEB
 
 # rename resulting Debian package according git description
 mv accel-ppp*.deb ${CWD}/accel-ppp_$(git describe --always --tags)_$(dpkg --print-architecture).deb
+apt-get remove -y liblua5.3-dev libreadline-dev || :
+apt-get install -y libeditreadline-dev || :
