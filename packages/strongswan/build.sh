@@ -23,7 +23,7 @@ echo "I: Build Debian Package"
 dpkg-buildpackage -uc -us -tc -b
 
 echo "I: Building python3-vici"
-autoreconf-vis
+autoreconf -vis
 ./configure -enable-python-eggs
 cd src/libcharon/plugins/vici/python
 make
