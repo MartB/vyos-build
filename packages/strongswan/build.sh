@@ -21,3 +21,11 @@ fi
 cd ${SRC}
 echo "I: Build Debian Package"
 dpkg-buildpackage -uc -us -tc -b
+
+echo "I: Building python3-vici"
+autoreconf-vis
+./configure -enable-python-eggs
+cd src/libcharon/plugins/vici/python
+make
+python3 setup.py --command-packages=stdeb.command bdist_deb
+
