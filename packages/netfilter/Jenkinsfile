@@ -39,7 +39,7 @@ def pkgList = [
     ['name': 'pkg-libnetfilter-conntrack',
      'scmCommit': 'debian/1.0.9-1',
      'scmUrl': 'https://salsa.debian.org/pkg-netfilter-team/pkg-libnetfilter-conntrack.git',
-     'buildCmd': 'dpkg-buildpackage -uc -us -tc -b'],
+     'buildCmd': 'sed -i "s/tests$//g" Makefile.am; dpkg-buildpackage -uc -us -tc -b'],
 
     // conntrack-tools
     ['name': 'pkg-conntrack-tools',
