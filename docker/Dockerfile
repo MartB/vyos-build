@@ -82,7 +82,7 @@ RUN apt-get update && apt-get install -y \
 
 # mcbridematt builder only
 RUN apt-get update && apt-get install -y \
-	lua5.3 lua-penlight lua-filesystem
+	lua5.3 liblua5.3-dev lua-penlight lua-filesystem
 
 # Packages needed for vyos-build
 RUN apt-get update && apt-get install -y \
