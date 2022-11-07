@@ -80,6 +80,10 @@ RUN apt-get update && apt-get install -y \
       openssh-client \
       jq
 
+# mcbridematt builder only
+RUN apt-get update && apt-get install -y \
+	lua5.3 lua-penlight lua-filesystem
+
 # Packages needed for vyos-build
 RUN apt-get update && apt-get install -y \
       build-essential \
